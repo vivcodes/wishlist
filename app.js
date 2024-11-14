@@ -1,4 +1,4 @@
-<script defer src="app.js"></script>
+
 // Sample products
 const products = [
     {
