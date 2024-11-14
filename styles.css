@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.wishlist-container {
+    display: flex;
+    gap: 20px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    width: 60%;
+}
+
+.product-item {
+    position: relative;
+    cursor: pointer;
+}
+
+.product-item img {
+    width: 100%;
+    border-radius: 8px;
+    transition: opacity 0.3s;
+}
+
+.product-details {
+    display: none;
+    width: 40%;
+    padding: 20px;
+    position: relative;
+}
+
+.details-content img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.product-grid.blur img {
+    opacity: 0.5;
+}
