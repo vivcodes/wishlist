@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="app.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-firestore.js"></script>
+</head>
+<body>
+    <div class="wishlist-container">
+        <div class="product-grid" id="productGrid"></div>
+        <div class="product-details" id="productDetails">
+            <button id="closeDetails">X</button>
+            <div class="details-content">
+                <img id="productImage" src="" alt="Product Image">
+                <h2 id="productName"></h2>
+                <a id="productLink" href="" target="_blank">View Product</a>
+                <label>
+                    <input type="checkbox" id="productCheck"> Mark as Favorite
+                </label>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
