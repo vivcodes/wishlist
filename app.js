@@ -1,68 +1,38 @@
-// Firebase Configuration
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-firestore.js";
+// Sample products
+const products = [
+    {
+        name: 'Product 1',
+        image: 'https://via.placeholder.com/150',
+        link: 'https://example.com/product1'
+    },
+    {
+        name: 'Product 2',
+        image: 'https://via.placeholder.com/150',
+        link: 'https://example.com/product2'
+    },
+    // Add more products here
+];
 
-const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-// UI Elements
+// Populate the product grid with images
 const productGrid = document.getElementById('productGrid');
-const productDetails = document.getElementById('productDetails');
-const productImage = document.getElementById('productImage');
-const productName = document.getElementById('productName');
-const productLink = document.getElementById('productLink');
-const productCheck = document.getElementById('productCheck');
-const closeDetails = document.getElementById('closeDetails');
 
-let selectedProductId = null;
+products.forEach(product => {
+    const productDiv = document.createElement('div');
+    productDiv.classList.add('product');
+    productDiv.innerHTML = `<img src="${product.image}" alt="${product.name}" class="product-image">`;
 
-// Load Products
-async function loadProducts() {
-    const querySnapshot = await getDocs(collection(db, "wishlist"));
-    querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        const productItem = document.createElement('div');
-        productItem.classList.add('product-item');
-        productItem.innerHTML = `<img src="${data.image}" alt="${data.name}">`;
-        productItem.addEventListener('click', () => showProductDetails(doc.id, data));
-        productGrid.appendChild(productItem);
+    // Add click event to show product details
+    productDiv.addEventListener('click', () => {
+        document.getElementById('productImage').src = product.image;
+        document.getElementById('productName').innerText = product.name;
+        document.getElementById('productLink').href = product.link;
+        document.getElementById('productDetails').style.display = 'block'; // Show the details section
     });
-}
 
-// Show Product Details
-function showProductDetails(id, data) {
-    selectedProductId = id;
-    productDetails.style.display = 'block';
-    productImage.src = data.image;
-    productName.textContent = data.name;
-    productLink.href = data.link;
-    productCheck.checked = data.isChecked;
-    productGrid.classList.add('blur');
-}
-
-// Close Details
-closeDetails.addEventListener('click', () => {
-    productDetails.style.display = 'none';
-    productGrid.classList.remove('blur');
-    selectedProductId = null;
+    productGrid.appendChild(productDiv);
 });
 
-// Update Checkbox
-productCheck.addEventListener('change', async () => {
-    if (selectedProductId) {
-        const productRef = doc(db, "wishlist", selectedProductId);
-        await updateDoc(productRef, { isChecked: productCheck.checked });
-    }
+// Close button to hide product details
+document.getElementById('closeDetails').addEventListener('click', () => {
+    document.getElementById('productDetails').style.display = 'none'; // Hide details section
 });
-
-// Initial Load
-loadProducts();
